@@ -1,0 +1,29 @@
+﻿<Application x:Class="MinkVPN.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MinkVPN"
+             xmlns:view="clr-namespace:MinkVPN.MVVM.View"
+             xmlns:vms="clr-namespace:MinkVPN.MVVM.ViewModel"
+             StartupUri="MVVM/View/MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--Themes here-->
+                <ResourceDictionary Source="/Themes/TitleBarButtons.NightMink.xaml"/>
+                <ResourceDictionary Source="/Themes/SideBarButtons.NightMink.xaml"/>
+                <ResourceDictionary Source="/Themes/ButtonConection.NightMink.xaml"/>
+                <ResourceDictionary Source="/Themes/ButtonDiconnection.NightMink.xaml"/>
+                <ResourceDictionary Source="/Themes/VpnServersList.NightMink.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type vms:ProtectionViewModel}">
+                <view:ProtectionView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:SettingsViewModel}">
+                <view:SettingsView/>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
