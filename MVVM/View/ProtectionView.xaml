@@ -14,13 +14,11 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-
+        
         <Image Source="\Themes\Imgs\world.png"
                RenderOptions.BitmapScalingMode="Fant"
-               Grid.RowSpan="3">
-            <Image.Effect>
-                <BlurEffect Radius="2.7"/>
-            </Image.Effect>
+               Grid.RowSpan="3"
+               Visibility="Visible">
         </Image>
 
         <ListView ItemsSource="{Binding VpnServers}"

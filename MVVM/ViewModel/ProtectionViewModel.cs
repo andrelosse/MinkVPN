@@ -15,11 +15,15 @@ namespace MinkVPN.MVVM.ViewModel
     internal class ProtectionViewModel : ObservObj
     {
 
+        static string address = "us1.vpnbook.com";
+        static string folder = $"{Directory.GetCurrentDirectory()}/VPNServer";
+        static string PBKPath = $"{folder}/VPNServer1.pbk";
+
         private string _connecStatus;
         private string _disconnecStatus;
 
         public ObservableCollection<ServerModel> VpnServers { get; set; }
-        public GlobalViewModel Global { get; } = GlobalViewModel.Instance;
+
         public string ConnecStatus {
             get { return _connecStatus; }
             set { _connecStatus = value;
@@ -73,13 +77,13 @@ namespace MinkVPN.MVVM.ViewModel
                     {
                         case 0:
                             Debug.WriteLine("CONNECTED DEBUG");
-                            ConnecStatus = "CONNECTED";
+                            ConnecStatus = "Connected";
                             break;
                         case 691:
                             MessageBox.Show("Wrong username/password");
                             break;
                         default:
-                            Console.WriteLine($"Error -> {connecProcess.ExitCode}");
+                            MessageBox.Show($"Error -> {connecProcess.ExitCode}");
                             break;
                     }
                 });
@@ -100,6 +104,8 @@ namespace MinkVPN.MVVM.ViewModel
                     disconnecProcess.Start();
                     disconnecProcess.WaitForExit();
 
+                    File.Delete(PBKPath);
+
                     DisconnecStatus = "Disconnect";
                 });
 
@@ -111,28 +117,29 @@ namespace MinkVPN.MVVM.ViewModel
 
         public void ServerConnector()
         {
-            var address = "us1.vpnbook.com";
-            var folder = $"{Directory.GetCurrentDirectory()}/VPNServer";
-            var PBKPath = $"{folder}/VPNServer1.pbk";
 
-            if (!Directory.Exists(folder))
-            {
-                Directory.CreateDirectory(folder);
-            }
-            if (File.Exists(PBKPath))
-            {
-                MessageBox.Show("Server connection already exists"); return;
-            }
+            try {
+                if (!Directory.Exists(folder))
+                {
+                    Directory.CreateDirectory(folder);
+                }
+                if (File.Exists(PBKPath))
+                {
+                    MessageBox.Show("Server connection already exists"); return;
+                }
 
-            var stringbuilds = new StringBuilder();
-            stringbuilds.AppendLine("[ServerX]");
-            stringbuilds.AppendLine("MEDIA=rastapi");
-            stringbuilds.AppendLine("Port=VPN2-0");
-            stringbuilds.AppendLine("Device=WAN Miniport (IKEv2)");
-            stringbuilds.AppendLine("DEVICE=vpn");
-            stringbuilds.AppendLine($"PhoneNumber={address}");
+                var stringbuilds = new StringBuilder();
+                stringbuilds.AppendLine("[ServerX]");
+                stringbuilds.AppendLine("MEDIA=rastapi");
+                stringbuilds.AppendLine("Port=VPN2-0");
+                stringbuilds.AppendLine("Device=WAN Miniport (IKEv2)");
+                stringbuilds.AppendLine("DEVICE=vpn");
+                stringbuilds.AppendLine($"PhoneNumber={address}");
 
-            File.WriteAllText(PBKPath, stringbuilds.ToString());
+                File.WriteAllText(PBKPath, stringbuilds.ToString());
+            } catch (Exception e){ MessageBox.Show(e.ToString()); return; }
+
+            
         }
     }
 }
