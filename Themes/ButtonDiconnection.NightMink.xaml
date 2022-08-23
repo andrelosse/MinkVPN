@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="{x:Type Button}" x:Key="DisconnectButtonStyle">
-        <Setter Property="Background" Value="DarkCyan"/>
+        <Setter Property="Background" Value="#581515"/>
         <Setter Property="Foreground" Value="LightGray"/>
-        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Cursor" Value="Hand"/>
 

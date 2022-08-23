@@ -14,16 +14,15 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-
+        
         <Image Source="\Themes\Imgs\world.png"
                RenderOptions.BitmapScalingMode="Fant"
-               Grid.RowSpan="3">
-            <Image.Effect>
-                <BlurEffect Radius="2.7"/>
-            </Image.Effect>
+               Grid.RowSpan="3"
+               Visibility="Visible">
         </Image>
 
         <ListView ItemsSource="{Binding VpnServers}"
+                  x:Name="ListServers"
                   Width="127"
                   Height="75"
                   Margin="0,57,0,0"
@@ -31,6 +30,7 @@
                   BorderThickness="0"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Top"
+                  SelectedItem="{Binding ServerSellected}"
                   ScrollViewer.CanContentScroll="False"/>
 
         <Button Width="137"

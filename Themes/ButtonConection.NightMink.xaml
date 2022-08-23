@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="{x:Type Button}" x:Key="ConnectionButtonStyle">
-        <Setter Property="Background" Value="DarkSlateBlue"/>
+        <Setter Property="Background" Value="#1b2374"/>
         <Setter Property="Foreground" Value="LightGray"/>
-        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Cursor" Value="Hand"/>
 
@@ -22,6 +22,9 @@
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Background" Value="Gray"/>
+            </Trigger>
+            <Trigger Property="Content" Value="Connected">
+                <Setter Property="Background" Value="#217f13"/>
             </Trigger>
         </Style.Triggers>
     </Style>
