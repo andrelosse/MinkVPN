@@ -21,17 +21,18 @@
                Visibility="Visible">
         </Image>
 
-        <ListView ItemsSource="{Binding VpnServers}"
-                  x:Name="ListServers"
+        <ListView Name="VpnServers"
+                  ItemsSource="{Binding VpnServers}"
                   Width="127"
-                  Height="75"
+                  Height="157"
                   Margin="0,57,0,0"
                   Background="#252525"
                   BorderThickness="0"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Top"
-                  SelectedItem="{Binding ServerSellected}"
-                  ScrollViewer.CanContentScroll="False"/>
+                  ScrollViewer.CanContentScroll="False"
+                  SelectedValue="{Binding ServerSellectedOBJ}">
+        </ListView>
 
         <Button Width="137"
                 Height="27"

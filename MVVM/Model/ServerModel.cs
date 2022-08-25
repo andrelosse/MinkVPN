@@ -7,15 +7,15 @@ namespace MinkVPN.MVVM.Model
         public string ID { get; }
         public string UserName { get; }
         public string Password { get; }
-        public string ServerOp { get; }
+        public string Address { get; }
         public string CountryOp { get; }
 
-        public ServerModel(string iD, string userName, string password, string serverOp, string countryOp)
+        public ServerModel(string iD, string userName, string password, string address, string countryOp)
         {
             ID = iD;
             UserName = userName;
             Password = password;
-            ServerOp = serverOp;
+            Address = address;
             CountryOp = countryOp;
         }
     }

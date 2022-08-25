@@ -19,13 +19,12 @@ namespace MinkVPN.MVVM.ViewModel
     {
 
         static string folder = $"{Directory.GetCurrentDirectory()}/VPNServer";
-        static string PBKPath = $"{folder}/VPNServer1.pbk";
+        static string PBKPath = $"{folder}/VPNServer.pbk";
 
         private string _connecStatus;
         private string _disconnecStatus;
 
-        public ObservableCollection<ServerModel> VpnServers { get; set; }
-        // public int Choosed { get; set; }
+        public ObservableCollection<ServerModel> VpnServers { set; get; } = new ObservableCollection<ServerModel>();
 
         public string ConnecStatus {
             get { return _connecStatus; }
@@ -42,31 +41,29 @@ namespace MinkVPN.MVVM.ViewModel
 
         public RelayCommands ConnecCommand { get; }
         public RelayCommands DisconnectCommand { get; }
-        public RelayCommands ServerSellected { get; set; }
-        // public ServerModel ServerSellectedOBJ { get; set; }
+        public ServerModel ServerSellectedOBJ { get; set; }
 
         public ProtectionViewModel()
         {
+
+            GetServers();
+
             ConnecStatus = "Connect";
             DisconnecStatus = "Disconnect";
 
-            ServerSellected = new RelayCommands(o => {
-                // testar para ver se o binded no xaml envia os dados da opcao selecionada para a propriedade,
-                // e se da para usar a propriedade para acessar os valores do objeto retornado
-                // NAO APARECE NADA NA LISTA DE SERVIDORES, CORRIGIR
-                MessageBox.Show(System.Windows.Controls.Primitives.Selector.SelectedItemProperty.ToString());
-            });
-
             ConnecCommand = new RelayCommands(o => {
+
+                ServerFile();
 
                 Task.Run(() =>
                 {
+
+                    
                     ConnecStatus = "Connecting...";
-                    ServerFile();
                     var connecProcess = new Process();
                     connecProcess.StartInfo.FileName = "cmd.exe";
                     connecProcess.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
-                    connecProcess.StartInfo.ArgumentList.Add($@"/c rasdial ServerInfo vpnbook n4862iu /phonebook:./VPNServer/VPNServer.pbk");
+                    connecProcess.StartInfo.ArgumentList.Add($@"/c rasdial ServerInfo {ServerSellectedOBJ.UserName} {ServerSellectedOBJ.Password} /phonebook:./VPNServer/VPNServer.pbk");
                     connecProcess.StartInfo.UseShellExecute = false;
                     connecProcess.StartInfo.CreateNoWindow = true;
 
@@ -124,7 +121,7 @@ namespace MinkVPN.MVVM.ViewModel
                 stringbuilds.AppendLine("Port=VPN2-0");
                 stringbuilds.AppendLine("Device=WAN Miniport (IKEv2)");
                 stringbuilds.AppendLine("DEVICE=vpn");
-                // stringbuilds.AppendLine($"PhoneNumber={address}");
+                stringbuilds.AppendLine(@$"PhoneNumber={ServerSellectedOBJ.Address}");
 
                 File.WriteAllText(PBKPath, stringbuilds.ToString());
             } catch (Exception e){ MessageBox.Show(e.ToString()); return; }
@@ -135,17 +132,15 @@ namespace MinkVPN.MVVM.ViewModel
         {
             ServerModel Server001 =
             new ServerModel(iD: "001", userName: "vpnbook", password: "n4862iu",
-                serverOp: "us1.vpnbook.com", countryOp: "USA");
+                address: "us1.vpnbook.com", countryOp: "USA");
 
             ServerModel Server002 =
                 new ServerModel(iD: "002", userName: "vpnbook", password: "n4862iu",
-                    serverOp: "ca222.vpnbook.com", countryOp: "Canada");
+                    address: "ca222.vpnbook.com", countryOp: "Canada");
 
             ServerModel Server003 =
                 new ServerModel(iD: "003", userName: "vpnbook", password: "n4862iu",
-                    serverOp: "fr8.vpnbook.com", countryOp: "France");
-
-            VpnServers = new ObservableCollection<ServerModel>();
+                    address: "fr8.vpnbook.com", countryOp: "France");
 
             VpnServers.Add(Server001);
             VpnServers.Add(Server002);
