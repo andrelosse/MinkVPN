@@ -6,25 +6,27 @@
              xmlns:local="clr-namespace:MinkVPN.MVVM.View"
              xmlns:localvm="clr-namespace:MinkVPN.MVVM.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Background="#1E1E1E">
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Background>
+        <ImageBrush ImageSource="/Themes/Imgs/world.png"
+                    RenderOptions.BitmapScalingMode="Fant"/>
+    </UserControl.Background>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="327"/>
+            <RowDefinition Height="57"/>
+            <RowDefinition Height="57"/>
         </Grid.RowDefinitions>
-        
-        <Image Source="\Themes\Imgs\world.png"
-               RenderOptions.BitmapScalingMode="Fant"
-               Grid.RowSpan="3"
-               Visibility="Visible">
-        </Image>
 
         <ListView Name="VpnServers"
                   ItemsSource="{Binding VpnServers}"
                   Width="127"
                   Height="157"
+                  Grid.ColumnSpan="3"
+                  Grid.RowSpan="3"
+                  Grid.Column="1"
                   Margin="0,57,0,0"
                   Background="#252525"
                   BorderThickness="0"

@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Themes\Imgs\world.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Themes\Imgs\world.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Update="Themes\ButtonDiconnection.NightMink.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
