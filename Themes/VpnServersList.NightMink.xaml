@@ -5,9 +5,9 @@
         
         <Setter Property="Background" Value="#252525"/>
         <Setter Property="Foreground" Value="LightGray"/>
-        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="Cursor" Value="Hand"/>
-        
+
     </Style>
 
     <Style TargetType="ListViewItem">
@@ -17,9 +17,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <StackPanel Orientation="Horizontal" Margin="3" MinHeight="25" Background="{TemplateBinding Background}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="2" MinHeight="27" Background="{TemplateBinding Background}">
                        <!-- <Image Width="27" RenderOptions.BitmapScalingMode="Fant"/> -->
-                        <TextBlock Text="{Binding CountryOp}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding CountryOp}" Margin="0,0,0,0" VerticalAlignment="Center"/>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>

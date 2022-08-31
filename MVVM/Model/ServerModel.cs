@@ -1,12 +1,22 @@
-﻿namespace MinkVPN.MVVM.Model
-{
-    public class ServerModel
-    {
+﻿using System.Collections.Generic;
 
-        public string ID { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string ServerOp { get; set; }
-        public string CountryOp { get; set; }
+namespace MinkVPN.MVVM.Model
+{
+    internal class ServerModel
+    {
+        public string ID { get; }
+        public string UserName { get; }
+        public string Password { get; }
+        public string Address { get; }
+        public string CountryOp { get; }
+
+        public ServerModel(string iD, string userName, string password, string address, string countryOp)
+        {
+            ID = iD;
+            UserName = userName;
+            Password = password;
+            Address = address;
+            CountryOp = countryOp;
+        }
     }
 }

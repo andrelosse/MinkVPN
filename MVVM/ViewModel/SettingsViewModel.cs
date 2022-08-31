@@ -10,8 +10,6 @@ namespace MinkVPN.MVVM.ViewModel
 {
     internal class SettingsViewModel
     {
-
-        public static GlobalViewModel Instance { get; } = new GlobalViewModel();
         public SettingsViewModel()
         {
         }

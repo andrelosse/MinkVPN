@@ -7,22 +7,24 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Collections.Generic;
 using MinkVPN.Core;
 using MinkVPN.MVVM.Model;
+using System.Windows.Controls;
+using MinkVPN.MVVM.View;
 
 namespace MinkVPN.MVVM.ViewModel
 {
     internal class ProtectionViewModel : ObservObj
     {
 
-        static string address = "us1.vpnbook.com";
         static string folder = $"{Directory.GetCurrentDirectory()}/VPNServer";
-        static string PBKPath = $"{folder}/VPNServer1.pbk";
+        static string PBKPath = $"{folder}/VPNServer.pbk";
 
         private string _connecStatus;
         private string _disconnecStatus;
 
-        public ObservableCollection<ServerModel> VpnServers { get; set; }
+        public ObservableCollection<ServerModel> VpnServers { set; get; } = new ObservableCollection<ServerModel>();
 
         public string ConnecStatus {
             get { return _connecStatus; }
@@ -30,43 +32,38 @@ namespace MinkVPN.MVVM.ViewModel
                 OnPropertyChanged(); 
             }
         }
-        public string DisconnecStatus
-        {
+        public string DisconnecStatus {
             get { return _disconnecStatus; }
             set{ _disconnecStatus = value;
                 OnPropertyChanged();
             }
         }
 
-        public RelayCommands ConnecCommand { get; set; }
-        public RelayCommands DisconnectCommand { get; set; }
+        public RelayCommands ConnecCommand { get; }
+        public RelayCommands DisconnectCommand { get; }
+        public ServerModel ServerSellectedOBJ { get; set; }
 
         public ProtectionViewModel()
         {
+
+            GetServers();
+
             ConnecStatus = "Connect";
             DisconnecStatus = "Disconnect";
 
-            VpnServers = new ObservableCollection<ServerModel>();
-
-                VpnServers.Add(new ServerModel
-                {
-                    CountryOp = "USA",
-                    ServerOp = "us1.vpnbook.com",
-                    Password = "n4862iu",
-                    UserName = "vpnbook",
-                    ID = "VPNBook",
-                });
-
             ConnecCommand = new RelayCommands(o => {
+
+                ServerFile();
 
                 Task.Run(() =>
                 {
+
+                    
                     ConnecStatus = "Connecting...";
-                    ServerConnector();
                     var connecProcess = new Process();
                     connecProcess.StartInfo.FileName = "cmd.exe";
                     connecProcess.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
-                    connecProcess.StartInfo.ArgumentList.Add(@"/c rasdial ServerX vpnbook n4862iu /phonebook:./VPNServer/VPNServer1.pbk");
+                    connecProcess.StartInfo.ArgumentList.Add($@"/c rasdial ServerInfo {ServerSellectedOBJ.UserName} {ServerSellectedOBJ.Password} /phonebook:./VPNServer/VPNServer.pbk");
                     connecProcess.StartInfo.UseShellExecute = false;
                     connecProcess.StartInfo.CreateNoWindow = true;
 
@@ -76,7 +73,6 @@ namespace MinkVPN.MVVM.ViewModel
                     switch (connecProcess.ExitCode)
                     {
                         case 0:
-                            Debug.WriteLine("CONNECTED DEBUG");
                             ConnecStatus = "Connected";
                             break;
                         case 691:
@@ -110,36 +106,45 @@ namespace MinkVPN.MVVM.ViewModel
                 });
 
                 ConnecStatus = "Connect";
-
-
             });
         }
 
-        public void ServerConnector()
+        public void ServerFile()
         {
 
             try {
-                if (!Directory.Exists(folder))
-                {
-                    Directory.CreateDirectory(folder);
-                }
-                if (File.Exists(PBKPath))
-                {
-                    MessageBox.Show("Server connection already exists"); return;
-                }
+                if (!Directory.Exists(folder)) { Directory.CreateDirectory(folder); }
 
                 var stringbuilds = new StringBuilder();
-                stringbuilds.AppendLine("[ServerX]");
+                stringbuilds.AppendLine("[ServerInfo]");
                 stringbuilds.AppendLine("MEDIA=rastapi");
                 stringbuilds.AppendLine("Port=VPN2-0");
                 stringbuilds.AppendLine("Device=WAN Miniport (IKEv2)");
                 stringbuilds.AppendLine("DEVICE=vpn");
-                stringbuilds.AppendLine($"PhoneNumber={address}");
+                stringbuilds.AppendLine(@$"PhoneNumber={ServerSellectedOBJ.Address}");
 
                 File.WriteAllText(PBKPath, stringbuilds.ToString());
             } catch (Exception e){ MessageBox.Show(e.ToString()); return; }
-
             
+        }
+
+        public void GetServers()
+        {
+            ServerModel Server001 =
+            new ServerModel(iD: "001", userName: "vpnbook", password: "n4862iu",
+                address: "us1.vpnbook.com", countryOp: "USA");
+
+            ServerModel Server002 =
+                new ServerModel(iD: "002", userName: "vpnbook", password: "n4862iu",
+                    address: "ca222.vpnbook.com", countryOp: "Canada");
+
+            ServerModel Server003 =
+                new ServerModel(iD: "003", userName: "vpnbook", password: "n4862iu",
+                    address: "fr8.vpnbook.com", countryOp: "France");
+
+            VpnServers.Add(Server001);
+            VpnServers.Add(Server002);
+            VpnServers.Add(Server003);
         }
     }
 }

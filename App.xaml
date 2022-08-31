@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:MinkVPN"
              xmlns:view="clr-namespace:MinkVPN.MVVM.View"
              xmlns:vms="clr-namespace:MinkVPN.MVVM.ViewModel"
+             xmlns:sm="clr-namespace:MinkVPN.MVVM.Model"
              StartupUri="MVVM/View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
