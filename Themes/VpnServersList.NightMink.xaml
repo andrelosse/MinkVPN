@@ -18,7 +18,6 @@
             <Setter.Value>
                 <ControlTemplate>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="2" MinHeight="27" Background="{TemplateBinding Background}">
-                       <!-- <Image Width="27" RenderOptions.BitmapScalingMode="Fant"/> -->
                         <TextBlock Text="{Binding CountryOp}" Margin="0,0,0,0" VerticalAlignment="Center"/>
                     </StackPanel>
                 </ControlTemplate>

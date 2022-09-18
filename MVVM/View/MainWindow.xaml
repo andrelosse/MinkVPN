@@ -3,19 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MinkVPN" xmlns:exts ="clr-namespace:MinkVPN.Core" xmlns:viewmodel="clr-namespace:MinkVPN.MVVM.ViewModel"
+        xmlns:local="clr-namespace:MinkVPN" xmlns:exts ="clr-namespace:MinkVPN.Core"
+        xmlns:viewmodel="clr-namespace:MinkVPN.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="MinkVPN v0.0.1"
-        Height="480"  Width="780"
+        Height="435"  Width="752"
+        MinHeight="270" MinWidth="470"
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"
-        ResizeMode="CanResize">
+        ResizeMode="CanResizeWithGrip">
 
     <Window.DataContext>
         <viewmodel:MainViewModel/>
     </Window.DataContext>
-    
+
     <DockPanel Background="#1E1E1E"
                Margin="7">
         <Border Height="28"
@@ -26,7 +28,7 @@
                 <MouseBinding MouseAction="LeftClick"
                               Command="{Binding ToMoveWindow}"/>
             </Border.InputBindings>
-            
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -47,7 +49,7 @@
                     <Button Content="🗕︎"
                             Padding="0,0,0,2"
                             Command="{Binding ToMinimizeWindow}"/>
-                    
+
                     <Button Content="🗖︎"
                             Padding="0,0,0,2"
                             Command="{Binding ToMaximizeWindow}"/>
@@ -55,9 +57,9 @@
                     <Button Content="🗙︎"
                             Padding="0,0,0,1"
                             Command="{Binding ToRemoveWindow}"/>
-                    
+
                 </StackPanel>
-                
+
             </Grid>
 
         </Border>
@@ -107,7 +109,7 @@
                              Foreground="LightGray"
                              IsChecked="True"
                              Command="{Binding ShowProtectionView}"/>
-                
+
                 <RadioButton Content="Status"
                              exts:ContentExtensions.Icon="&#128747;"
                              FontSize="17"
@@ -124,7 +126,7 @@
                              Command="{Binding ShowSettingsView}"/>
 
             </StackPanel>
-            
+
         </Border>
 
         <ContentPresenter Content="{Binding CurrentView}"/>

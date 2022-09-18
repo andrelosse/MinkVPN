@@ -63,12 +63,15 @@ namespace MinkVPN.MVVM.ViewModel
                     var connecProcess = new Process();
                     connecProcess.StartInfo.FileName = "cmd.exe";
                     connecProcess.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
-                    connecProcess.StartInfo.ArgumentList.Add($@"/c rasdial ServerInfo {ServerSellectedOBJ.UserName} {ServerSellectedOBJ.Password} /phonebook:./VPNServer/VPNServer.pbk");
-                    connecProcess.StartInfo.UseShellExecute = false;
-                    connecProcess.StartInfo.CreateNoWindow = true;
+                    if (ServerSellectedOBJ != null)
+                    {
+                        connecProcess.StartInfo.ArgumentList.Add($@"/c rasdial ServerInfo {ServerSellectedOBJ.UserName} {ServerSellectedOBJ.Password} /phonebook:./VPNServer/VPNServer.pbk");
+                        connecProcess.StartInfo.UseShellExecute = false;
+                        connecProcess.StartInfo.CreateNoWindow = true;
 
-                    connecProcess.Start();
-                    connecProcess.WaitForExit();
+                        connecProcess.Start();
+                        connecProcess.WaitForExit();
+                    }
 
                     switch (connecProcess.ExitCode)
                     {
@@ -115,6 +118,11 @@ namespace MinkVPN.MVVM.ViewModel
             try {
                 if (!Directory.Exists(folder)) { Directory.CreateDirectory(folder); }
 
+                if (ServerSellectedOBJ == null)
+                {
+                    MessageBox.Show("Conection failed"); return;
+                }
+
                 var stringbuilds = new StringBuilder();
                 stringbuilds.AppendLine("[ServerInfo]");
                 stringbuilds.AppendLine("MEDIA=rastapi");
@@ -124,6 +132,7 @@ namespace MinkVPN.MVVM.ViewModel
                 stringbuilds.AppendLine(@$"PhoneNumber={ServerSellectedOBJ.Address}");
 
                 File.WriteAllText(PBKPath, stringbuilds.ToString());
+
             } catch (Exception e){ MessageBox.Show(e.ToString()); return; }
             
         }
@@ -131,15 +140,15 @@ namespace MinkVPN.MVVM.ViewModel
         public void GetServers()
         {
             ServerModel Server001 =
-            new ServerModel(iD: "001", userName: "vpnbook", password: "n4862iu",
+            new ServerModel(iD: "001", userName: "vpnbook", password: "w48bf5a",
                 address: "us1.vpnbook.com", countryOp: "USA");
 
             ServerModel Server002 =
-                new ServerModel(iD: "002", userName: "vpnbook", password: "n4862iu",
+                new ServerModel(iD: "002", userName: "vpnbook", password: "w48bf5a",
                     address: "ca222.vpnbook.com", countryOp: "Canada");
 
             ServerModel Server003 =
-                new ServerModel(iD: "003", userName: "vpnbook", password: "n4862iu",
+                new ServerModel(iD: "003", userName: "vpnbook", password: "w48bf5a",
                     address: "fr8.vpnbook.com", countryOp: "France");
 
             VpnServers.Add(Server001);

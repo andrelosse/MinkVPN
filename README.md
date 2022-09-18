@@ -25,3 +25,8 @@ There are some features that will be added in future versions:
 --> Added three server options to connect to;
 --> Fixed ListView and it's data binding in ProtectionView and ProtectionViewModel;
 --> General improvements in the code;
+
+09/18/2022 update:
+
+--> Resize the window is now possible (The content is not yet responsive);
+--> The exception thrown when the user tries to connect to a server without choosing one from the list now does not break the application;
