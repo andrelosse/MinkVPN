@@ -121,9 +121,14 @@ namespace MinkVPN.MVVM.ViewModel
                 stringbuilds.AppendLine("Port=VPN2-0");
                 stringbuilds.AppendLine("Device=WAN Miniport (IKEv2)");
                 stringbuilds.AppendLine("DEVICE=vpn");
-                stringbuilds.AppendLine(@$"PhoneNumber={ServerSellectedOBJ.Address}");
-
+                try {
+                    stringbuilds.AppendLine(@$"PhoneNumber={ServerSellectedOBJ.Address}");
+                }
+                catch (Exception e){
+                    MessageBox.Show(e.ToString()); return;
+                }
                 File.WriteAllText(PBKPath, stringbuilds.ToString());
+
             } catch (Exception e){ MessageBox.Show(e.ToString()); return; }
             
         }
@@ -131,15 +136,15 @@ namespace MinkVPN.MVVM.ViewModel
         public void GetServers()
         {
             ServerModel Server001 =
-            new ServerModel(iD: "001", userName: "vpnbook", password: "n4862iu",
+            new ServerModel(iD: "001", userName: "vpnbook", password: "w48bf5a",
                 address: "us1.vpnbook.com", countryOp: "USA");
 
             ServerModel Server002 =
-                new ServerModel(iD: "002", userName: "vpnbook", password: "n4862iu",
+                new ServerModel(iD: "002", userName: "vpnbook", password: "w48bf5a",
                     address: "ca222.vpnbook.com", countryOp: "Canada");
 
             ServerModel Server003 =
-                new ServerModel(iD: "003", userName: "vpnbook", password: "n4862iu",
+                new ServerModel(iD: "003", userName: "vpnbook", password: "w48bf5a",
                     address: "fr8.vpnbook.com", countryOp: "France");
 
             VpnServers.Add(Server001);

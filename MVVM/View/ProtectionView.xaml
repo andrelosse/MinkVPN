@@ -20,21 +20,6 @@
             <RowDefinition Height="57"/>
         </Grid.RowDefinitions>
 
-        <ListView Name="VpnServers"
-                  ItemsSource="{Binding VpnServers}"
-
-        <ListView ItemsSource="{Binding VpnServers}"
-
-        <ListView ItemsSource="{Binding VpnServers}"
-
-        <ListView ItemsSource="{Binding VpnServers}"
-
-        <ListView ItemsSource="{Binding VpnServers}"
-
-        <ListView ItemsSource="{Binding VpnServers}"
-
-        <ListView ItemsSource="{Binding VpnServers}"
-
         <ListView ItemsSource="{Binding VpnServers}"
                   Width="127"
                   Height="157"
