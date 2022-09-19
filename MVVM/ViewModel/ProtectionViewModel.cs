@@ -129,8 +129,12 @@ namespace MinkVPN.MVVM.ViewModel
                 stringbuilds.AppendLine("Port=VPN2-0");
                 stringbuilds.AppendLine("Device=WAN Miniport (IKEv2)");
                 stringbuilds.AppendLine("DEVICE=vpn");
-                stringbuilds.AppendLine(@$"PhoneNumber={ServerSellectedOBJ.Address}");
-
+                try {
+                    stringbuilds.AppendLine(@$"PhoneNumber={ServerSellectedOBJ.Address}");
+                }
+                catch (Exception e){
+                    MessageBox.Show(e.ToString()); return;
+                }
                 File.WriteAllText(PBKPath, stringbuilds.ToString());
 
             } catch (Exception e){ MessageBox.Show(e.ToString()); return; }
