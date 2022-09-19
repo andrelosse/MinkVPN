@@ -58,33 +58,33 @@ namespace MinkVPN.MVVM.ViewModel
                 Task.Run(() =>
                 {
 
-                    
-                    ConnecStatus = "Connecting...";
                     var connecProcess = new Process();
                     connecProcess.StartInfo.FileName = "cmd.exe";
                     connecProcess.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
                     if (ServerSellectedOBJ != null)
                     {
+                        ConnecStatus = "Connecting...";
                         connecProcess.StartInfo.ArgumentList.Add($@"/c rasdial ServerInfo {ServerSellectedOBJ.UserName} {ServerSellectedOBJ.Password} /phonebook:./VPNServer/VPNServer.pbk");
                         connecProcess.StartInfo.UseShellExecute = false;
                         connecProcess.StartInfo.CreateNoWindow = true;
 
                         connecProcess.Start();
                         connecProcess.WaitForExit();
+
+                        switch (connecProcess.ExitCode)
+                        {
+                            case 0:
+                                ConnecStatus = "Connected";
+                                break;
+                            case 691:
+                                MessageBox.Show("Wrong username/password");
+                                break;
+                            default:
+                                MessageBox.Show($"Error -> {connecProcess.ExitCode}");
+                                break;
+                        }
                     }
 
-                    switch (connecProcess.ExitCode)
-                    {
-                        case 0:
-                            ConnecStatus = "Connected";
-                            break;
-                        case 691:
-                            MessageBox.Show("Wrong username/password");
-                            break;
-                        default:
-                            MessageBox.Show($"Error -> {connecProcess.ExitCode}");
-                            break;
-                    }
                 });
             });
 
@@ -120,7 +120,7 @@ namespace MinkVPN.MVVM.ViewModel
 
                 if (ServerSellectedOBJ == null)
                 {
-                    MessageBox.Show("Conection failed"); return;
+                    MessageBox.Show("Please, select a server."); return;
                 }
 
                 var stringbuilds = new StringBuilder();
@@ -129,8 +129,12 @@ namespace MinkVPN.MVVM.ViewModel
                 stringbuilds.AppendLine("Port=VPN2-0");
                 stringbuilds.AppendLine("Device=WAN Miniport (IKEv2)");
                 stringbuilds.AppendLine("DEVICE=vpn");
-                stringbuilds.AppendLine(@$"PhoneNumber={ServerSellectedOBJ.Address}");
-
+                try {
+                    stringbuilds.AppendLine(@$"PhoneNumber={ServerSellectedOBJ.Address}");
+                }
+                catch (Exception e){
+                    MessageBox.Show(e.ToString()); return;
+                }
                 File.WriteAllText(PBKPath, stringbuilds.ToString());
 
             } catch (Exception e){ MessageBox.Show(e.ToString()); return; }
